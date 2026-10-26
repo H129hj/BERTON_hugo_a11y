@@ -1,9 +1,5 @@
 import './App.css'
 
-// Mission : lance Lighthouse (onglet Accessibility) et/ou axe DevTools sur
-// cette page, note les violations de contraste dans AUDIT.md, puis corrige
-// les couleurs dans App.css pour atteindre le ratio AA.
-
 function App() {
   return (
     <div className="page">
