@@ -1,55 +1,31 @@
-# Quête 5 : Contrastes de couleurs et audit d'accessibilité
+# Quête 5 : contrastes de couleurs et audit
 
-**Mission** : en 2 temps.
+Page « Espace client » en React + Vite + TypeScript. Le but : repérer les
+textes qui ne passent pas le contraste WCAG AA, les corriger dans
+`src/App.css` et documenter l'audit dans [`AUDIT.md`](./AUDIT.md).
 
-**1. Audit.** Lance Lighthouse, axe DevTools et WAVE sur la page, et remplis
-[`AUDIT.md`](./AUDIT.md).
-
-**2. Correction.** Corrige `src/App.css` pour que les 4 éléments repérés
-passent le seuil WCAG AA (texte normal : **4.5:1**, grand texte/UI : **3:1**),
-sans tout repeindre en noir sur blanc, garde un style cohérent.
-
-## Démarrer
+## Lancer le projet
 
 ```bash
 npm install
 npm run dev
 ```
 
-<details>
-<summary>💡 Indice 1 : où sont les 4 problèmes</summary>
+## Ce que j'ai fait
 
-`.subtitle`, `.label`, `.hint` sont des textes gris clair sur fond blanc, un
-classique de design "épuré" qui casse le contraste. `.btn-primary` est un
-texte blanc sur un bleu trop clair.
+- Calcul des ratios de contraste des 4 éléments qui posaient problème
+  (`.subtitle`, `.label`, `.hint`, `.btn-primary`) avec la formule de
+  luminance relative des WCAG.
+- Correction des couleurs dans `src/App.css` pour passer le seuil AA
+  (4.5:1 pour du texte normal), en gardant des gris et le bleu d'origine,
+  juste plus foncés.
+- Rédaction de `AUDIT.md` : tableau avant/après et ordre de priorité.
 
-</details>
+## Résultat
 
-<details>
-<summary>💡 Indice 2 : comment mesurer vite</summary>
-
-Dans Chrome DevTools, sélectionne l'élément, ouvre le panneau Styles, clique
-sur le petit carré de couleur à côté de `color` : DevTools affiche directement
-le ratio de contraste et s'il passe AA/AAA, avec une suggestion de couleur la
-plus proche qui passe.
-
-</details>
-
-<details>
-<summary>✅ Solution : une palette qui passe AA</summary>
-
-```css
-.subtitle { color: #5c5c5c; }      /* ratio ≈ 7.1:1 */
-.label { color: #595959; }          /* ratio ≈ 7.5:1 */
-.hint { color: #595959; }           /* ratio ≈ 7.5:1 */
-
-.btn-primary {
-  background: #1a5fa8;              /* bleu plus soutenu */
-  color: #ffffff;                   /* ratio ≈ 6.3:1 */
-}
-```
-
-Ces valeurs gardent la même intention visuelle (gris doux, bleu "primaire")
-tout en passant largement le seuil AA.
-
-</details>
+| Élément | Avant | Après |
+|---------|-------|-------|
+| `.subtitle` | 2.32:1 | 5.33:1 |
+| `.label` | 2.85:1 | 5.33:1 |
+| `.hint` | 1.92:1 | 4.95:1 |
+| `.btn-primary` | 2.53:1 | 5.43:1 |
